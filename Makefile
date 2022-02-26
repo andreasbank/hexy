@@ -15,4 +15,4 @@ install:
 
 .PHONY: clean
 clean:
-	$(RM) hexy *.o
+	$(RM) $(PROGS) *.o
