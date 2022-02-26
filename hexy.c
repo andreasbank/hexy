@@ -4,10 +4,12 @@
 #include <string.h>
 
 int main(int argc, char **argv) {
+  int ret = 0;
   FILE *fp = NULL;
-  char *buffer = NULL;
+  unsigned char *buffer = NULL;
   size_t buffer_len;
   char *hex = NULL;
+  size_t hex_len;
 
   if (argc != 2) return 1;
 
@@ -24,22 +26,24 @@ int main(int argc, char **argv) {
 
   if (fread(buffer, 1, buffer_len, fp) != buffer_len) {
     fprintf(stderr, "Failed to read the file\n");
-    fclose(fp);
-    return 1;
+    ret = 1;
+    goto cleanup;
   }
 
-  hex = malloc(buffer_len * 2 + 1);
+  hex_len = buffer_len * 2;
+  hex = malloc(hex_len + 1);
 
   for (size_t i = 0; i < buffer_len; i++) {
     sprintf(&hex[i * 2], "%02X", buffer[i]);
   }
-  hex[buffer_len * 2] = '\0';
+  hex[hex_len] = '\0';
 
   printf("%s\n", hex);
 
+cleanup:
   fclose(fp);
   free(buffer);
   free(hex);
 
-  return 0;
+  return ret;
 }
