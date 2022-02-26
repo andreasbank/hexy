@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
 		char u2 = hex2uint(hex[i*2 + 1]);
 		if (u1 < 0 || u1 > 15 || u2 < 0 || u2 > 15) {
 			fprintf(stderr, "Invalid HEX characters in string "
-				"('%c' or '%c'))\n", u1, u2);
+				"('%c' or '%c'))\n", hex[i*2], hex[i*2 + 1]);
 			goto cleanup;
 		}
 		bin[i] = (uint8_t) ((u1 << 4) | u2);
@@ -92,7 +92,6 @@ int main(int argc, char **argv) {
 			strerror(errno));
 		goto cleanup;
 	}
-	printf("\n");
 
 	retval = 0;
 
